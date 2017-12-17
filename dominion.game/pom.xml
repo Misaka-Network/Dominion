@@ -18,5 +18,9 @@
             <groupId>com.misaka.network</groupId>
             <artifactId>dominion.core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.misaka.network</groupId>
+            <artifactId>dominion.service</artifactId>
+        </dependency>
     </dependencies>
 </project>

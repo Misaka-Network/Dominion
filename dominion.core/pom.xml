@@ -12,11 +12,4 @@
 
     <artifactId>dominion.core</artifactId>
     <packaging>jar</packaging>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-        </dependency>
-    </dependencies>
 </project>
