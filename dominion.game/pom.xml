@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>dominion.service</artifactId>
+    <artifactId>dominion.game</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>com.misaka.network</groupId>
-            <artifactId>dominion.service</artifactId>
+            <artifactId>dominion.user</artifactId>
         </dependency>
     </dependencies>
 </project>
