@@ -1,14 +1,26 @@
 package com.misaka.network.dominion.service.entity.card.treasure;
 
 import com.misaka.network.dominion.core.type.CardEnum;
+import com.misaka.network.dominion.core.type.ExpansionEnum;
+import com.misaka.network.dominion.service.entity.Card;
 import com.misaka.network.dominion.service.entity.card.TreasureCard;
+import com.misaka.network.dominion.service.impl.CardRegistry;
+import com.misaka.network.dominion.service.type.card.CardFeature;
+
+import java.util.Arrays;
 
 /**
  * @author hyzhou.zhy. 2017/12/16.
  */
 public class BankCard extends TreasureCard {
     static {
-        cardEnumMap.put(CardEnum.Bank, BankCard.class);
+        CardRegistry.register(CardEnum.Bank, new CardRegistry.CardStatic() {{
+            setCost(7);
+            setIsSupply(true);
+            setExpansion(ExpansionEnum.Prosperity);
+            setFeatureList(Arrays.asList(CardFeature.TREASURE));
+            setInstanceType(BankCard.class);
+        }});
     }
 
     public BankCard() {
@@ -17,10 +29,12 @@ public class BankCard extends TreasureCard {
 
     @Override
     public int getValue() {
-        // TODO Hyzhou
-        // 示例
-        //      价值作为一个接口是可以扩展的.
-        //      根据玩家和游戏盘面状态动态变化.
-        return -1;
+        int treasureCardCount = 1; // 算上自己一个
+        for (Card card : game.getPlayer(player).getBoardPile()) {
+            if (card.hasFeature(CardFeature.TREASURE)) {
+                treasureCardCount++;
+            }
+        }
+        return treasureCardCount;
     }
 }

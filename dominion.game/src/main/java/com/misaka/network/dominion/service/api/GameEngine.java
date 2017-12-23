@@ -9,15 +9,25 @@ import java.util.List;
  * @author hyzhou.zhy. 2017/12/16.
  */
 public interface GameEngine {
-    void choiceCard(Long playerId, List<Card> cardList);
+    // 标记操作
 
-    void choiceYesOrNo(Player player);
+    void addActions(Long playerId, int count);
+
+    void addCoins(Long playerId, int count);
+
+    void addBuys(Long playerId, int count);
+
+    void addCards(Long playerId, int count);
+
+    // 基本术语操作
 
     void reveral(Long playerId, Card card);
 
     void retrace(Card card);
 
-    void draw(Player player);
+    void draw(Long playerId);
+
+    void gain(Long playerId, Card card);
 
     void discard(Long playerId, Card card);
 
@@ -32,4 +42,10 @@ public interface GameEngine {
     void reaction(Long playerId, Card card, Player playerReaction);
 
     void shuffle(Long playerId, List<Card> card);
+
+    // 高级交互
+
+    Card choiceCard(Long playerId, List<Card> cardList);
+
+    void choiceYesOrNo(Long playerId);
 }

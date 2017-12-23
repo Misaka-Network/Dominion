@@ -15,10 +15,11 @@ public class Player {
     private int buys;
     private int victory;
 
-    private List<Token> tokens;
-    private List<Card> handCards;
-    private List<Card> drawPile;
-    private List<Card> discardPile;
+    private List<Token> tokens;         // Token
+    private List<Card> handCards;       // 手牌
+    private List<Card> boardPile;       // 场上使用的牌
+    private List<Card> drawPile;        // 抽牌堆
+    private List<Card> discardPile;     // 弃牌堆
 
     private GameEngine game;
 
@@ -80,6 +81,14 @@ public class Player {
 
     public void setHandCards(List<Card> handCards) {
         this.handCards = handCards;
+    }
+
+    public List<Card> getBoardPile() {
+        return boardPile;
+    }
+
+    public void setBoardPile(List<Card> boardPile) {
+        this.boardPile = boardPile;
     }
 
     public List<Card> getDrawPile() {
