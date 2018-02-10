@@ -7,11 +7,16 @@ public enum CardEnum {
     // Treasure
     Copper,
     Silver,
-    Goad,
+    Gold,
     Bank,
 
     // Victory
     Estate,
     Duchy,
-    Province
+    Province,
+
+    // Action
+    Village,
+    Market,
+    Remodel,
 }

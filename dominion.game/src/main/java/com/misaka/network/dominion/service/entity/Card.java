@@ -1,14 +1,9 @@
 package com.misaka.network.dominion.service.entity;
 
 import com.misaka.network.dominion.core.type.CardEnum;
-import com.misaka.network.dominion.core.type.ExpansionEnum;
-import com.misaka.network.dominion.service.api.GameEngine;
+import com.misaka.network.dominion.service.GameImpl;
+import com.misaka.network.dominion.service.impl.CardRegistry;
 import com.misaka.network.dominion.service.type.card.CardFeature;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author hyzhou.zhy. 2017/12/16.
@@ -17,15 +12,9 @@ import java.util.Map;
 public abstract class Card {
     protected Long id;
     protected CardEnum cardEnum;
-    protected Player player;                  // 持有者
 
-    protected GameEngine game;                // 游戏实例
-    protected boolean isSupply;               // 公国牌堆?
-
-    protected boolean isPositive;             // 正面状态?
-    protected ExpansionEnum expansionType;    // 扩充类型
-
-    protected List<CardFeature> featureList = new ArrayList<CardFeature>();   // 类型属性
+    protected Long player;                    // 持有者
+    protected GameImpl game;                  // 游戏实例
 
     public Card(CardEnum cardEnum) {
         this.cardEnum = cardEnum;
@@ -47,77 +36,31 @@ public abstract class Card {
         this.cardEnum = cardEnum;
     }
 
-    public boolean getIsSupply() {
-        return isSupply;
-    }
-
-    public void setIsSupply(boolean supply) {
-        this.isSupply = supply;
-    }
-
-    public boolean getIsPositive() {
-        return isPositive;
-    }
-
-    public void setIsPositive(boolean isPositive) {
-        this.isPositive = isPositive;
-    }
-
-    public ExpansionEnum getExpansion() {
-        return expansionType;
-    }
-
-    public void setExpansion(ExpansionEnum expansion) {
-        this.expansionType = expansion;
-    }
-
-    public GameEngine getGame() {
+    public GameImpl getGame() {
         return game;
     }
 
-    public void setGame(GameEngine game) {
+    public void setGame(GameImpl game) {
         this.game = game;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(Long player) {
         this.player = player;
     }
 
-    public Player getPlayer() {
+    public Long getPlayer() {
         return player;
     }
 
-    public boolean checkFeature(CardFeature feature) {
-        return featureList.contains(feature);
+    ////////////////////////////////////////////////////////////////////////////
+    // 卡的综合属性
+    ////////////////////////////////////////////////////////////////////////////
+
+    public int getCost() {
+        return CardRegistry.getCost(cardEnum);
     }
 
-    protected void addFeature(CardFeature feature) {
-        this.featureList.add(feature);
+    public boolean hasFeature(CardFeature cardFeature) {
+        return CardRegistry.getFeatureList(cardEnum).contains(cardFeature);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    // 工具
-    ////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected static Map<CardEnum, Class<? extends Card>> cardEnumMap = new HashMap<CardEnum, Class<? extends Card>>();
-
-    public static Class<? extends Card> getCardClass(CardEnum cardEnum) {
-        return cardEnumMap.get(cardEnum);
-    }
-
-    public static Card getCardInstance(CardEnum cardEnum) {
-        Class<? extends Card> cardClass = getCardClass(cardEnum);
-        if (cardClass == null) {
-            throw new RuntimeException("No Such CardEnum");
-        }
-        try {
-            return cardClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        throw new RuntimeException("No Such Card Creator");
-    }
-
 }

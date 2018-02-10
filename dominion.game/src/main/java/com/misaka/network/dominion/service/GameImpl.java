@@ -6,6 +6,7 @@ import com.misaka.network.dominion.core.type.CardEnum;
 import com.misaka.network.dominion.service.api.GameEngine;
 import com.misaka.network.dominion.service.entity.Card;
 import com.misaka.network.dominion.service.entity.Player;
+import com.misaka.network.dominion.service.impl.CardRegistry;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class GameImpl implements Game, GameEngine {
     private static final Map<CardEnum, List<Integer>> basicCardCount = new HashMap<CardEnum, List<Integer>>() {{
         put(CardEnum.Copper, Arrays.asList(0, 0, 60, 60, 60, 60, 60));
         put(CardEnum.Silver, Arrays.asList(0, 0, 40, 40, 40, 40, 40));
-        put(CardEnum.Goad, Arrays.asList(0, 0, 30, 30, 30, 30, 30));
+        put(CardEnum.Gold, Arrays.asList(0, 0, 30, 30, 30, 30, 30));
         put(CardEnum.Estate, Arrays.asList(0, 0, 8, 12, 12, 12, 12));
         put(CardEnum.Duchy, Arrays.asList(0, 0, 8, 12, 12, 12, 12));
         put(CardEnum.Province, Arrays.asList(0, 0, 8, 12, 12, 15, 18));
@@ -48,15 +49,15 @@ public class GameImpl implements Game, GameEngine {
         for (CardEnum cardEnum : cardList) {
             ArrayList<Card> supplyCardPile = new ArrayList<Card>();
             for (int i = 0; i < 10; i++) {
-                supplyCardPile.add(Card.getCardInstance(cardEnum));
+                supplyCardPile.add(CardRegistry.getNewInstance(cardEnum));
             }
             supplyCardPileList.put(cardEnum, supplyCardPile);
         }
 
-        for (CardEnum cardEnum : Arrays.asList(CardEnum.Copper, CardEnum.Silver, CardEnum.Goad, CardEnum.Estate, CardEnum.Duchy, CardEnum.Province)) {
+        for (CardEnum cardEnum : Arrays.asList(CardEnum.Copper, CardEnum.Silver, CardEnum.Gold, CardEnum.Estate, CardEnum.Duchy, CardEnum.Province)) {
             ArrayList<Card> basicCardPile = new ArrayList<Card>();
             for (int i = 0; i < basicCardCount.get(cardEnum).get(playerList.size()); i++) {
-                basicCardPile.add(Card.getCardInstance(cardEnum));
+                basicCardPile.add(CardRegistry.getNewInstance(cardEnum));
             }
             basicCardPileList.put(cardEnum, basicCardPile);
         }
@@ -69,13 +70,62 @@ public class GameImpl implements Game, GameEngine {
 
     }
 
+//////////////////////////////////////////////////////
+
+    public Player getPlayer(Long id) {
+        return playerList.get(id);
+    }
+
+
+    public List<Card> getSupplyCardPile(CardEnum cardEnum) {
+        return supplyCardPileList.get(cardEnum);
+    }
+
+    public List<Card> getBasicCardPile(CardEnum cardEnum) {
+        return basicCardPileList.get(cardEnum);
+    }
+
+    public Map<Long, Player> getPlayerList() {
+        return playerList;
+    }
+
+    public Map<CardEnum, List<Card>> getSupplyCardPileList() {
+        return supplyCardPileList;
+    }
+
+    public Map<CardEnum, List<Card>> getBasicCardPileList() {
+        return basicCardPileList;
+    }
+
+    //////////////////////////////////////////////////////
+
     @Override
-    public void choiceCard(Long playerId, List<Card> cardList) {
+    public void addActions(Long playerId, int count) {
 
     }
 
     @Override
-    public void choiceYesOrNo(Player player) {
+    public void addCoins(Long playerId, int count) {
+
+    }
+
+    @Override
+    public void addBuys(Long playerId, int count) {
+
+    }
+
+    @Override
+    public void addCards(Long playerId, int count) {
+
+    }
+
+    @Override
+    public Card choiceCard(Long playerId, List<Card> cardList) {
+        return null;
+    }
+
+    @Override
+    public void choiceYesOrNo(Long playerId) {
 
     }
 
@@ -90,7 +140,12 @@ public class GameImpl implements Game, GameEngine {
     }
 
     @Override
-    public void draw(Player player) {
+    public void draw(Long playerId) {
+
+    }
+
+    @Override
+    public void gain(Long playerId, Card card) {
 
     }
 
