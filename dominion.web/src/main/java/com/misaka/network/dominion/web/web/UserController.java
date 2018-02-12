@@ -15,29 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/userAction")
 public class UserController {
     @RequestMapping(value = "/newRoom", method = RequestMethod.GET)
-    public long startGame(@RequestParam(value = "userId", required = true, defaultValue = "") long userId) {
+    public long newRoom() {
         Room room = new Room(new GameImpl());
-        room.addPlayer(userId);
-        room.start();
         long roomId = ServerStorage.instance().addRoom(room);
         return roomId;
     }
-
-    @RequestMapping(value = "/addRoom", method = RequestMethod.GET)
-    public boolean addGame(@RequestParam(value = "userId", required = true, defaultValue = "") long userId,
-                           @RequestParam(value = "roomId", required = true, defaultValue = "") long roomId) {
-        ServerStorage.instance().getRoom(roomId).addPlayer(userId);
-        return false;
-    }
-
-    //TODO: startGame should connect by webSocket
-//    @RequestMapping(value = "/startGame", method = RequestMethod.GET)
-//    public long startGame(@RequestParam(value = "userId", required = true, defaultValue = "") long userId,
-//                             @RequestParam(value = "userId", required = true, defaultValue = "") long gameId) {
-//        Game game = ServerStorage.instance().getGame(gameId);
-//        return game.gameStart();
-//    }
-
-
-
 }

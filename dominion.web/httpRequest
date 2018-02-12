@@ -1,0 +1,14 @@
+server status
+http://localhost:8080/status
+new room
+http://localhost:8080/userAction/newRoom
+
+add room
+var webSocket = new WebSocket("ws://localhost:8080/UserWSAction?userId=1&roomId=0");
+webSocket.send('{"userId":1,"roomId":0,"action":"addRoom"}');
+
+exit room
+webSocket.send('{"userId":1,"roomId":0,"action":"exitRoom"}');
+
+start game
+webSocket.send('{"roomId":1,"action":"startGame"}');

@@ -1,6 +1,8 @@
 package com.misaka.network.dominion.web.data;
 
 import com.misaka.network.dominion.core.Game;
+import com.misaka.network.dominion.core.type.CardEnum;
+import com.misaka.network.dominion.web.core.GameServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +10,14 @@ import java.util.List;
 /**
  * Created by Luhaijie on 2017/12/24.
  */
-public class Room extends Thread {
+public class Room implements GameServer {
     private static Long roomCounter = new Long(0);
+
     private long roomId;
+    private boolean isStart = false;
     private Game game;
     private List<Long> playerList = new ArrayList<Long>();
+    private List<CardEnum> cardEnumList = new ArrayList<CardEnum>();
 
     public Room(Game game) {
         synchronized (roomCounter) {
@@ -21,22 +26,12 @@ public class Room extends Thread {
         this.game = game;
     }
 
-    @Override
-    public void run() {
-        super.run();
-        long heartbeat = 0;
-        while(true) {
-            try {
-                Thread.sleep(1000);
-                System.out.println("Room heartbeat: " + heartbeat++);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public synchronized void addPlayer(long playerId) {
+        playerList.add(playerId);
     }
 
-    public synchronized void addPlayer(long playerId){
-        playerList.add(playerId);
+    public synchronized boolean delPlayer(long playerId) {
+        return playerList.remove(playerId);
     }
 
     public long getRoomId() {
@@ -53,5 +48,21 @@ public class Room extends Thread {
 
     public List<Long> getPlayerList() {
         return playerList;
+    }
+
+    @Override
+    public void start() throws Exception {
+        game.gameStart(playerList, cardEnumList);
+        isStart = true;
+    }
+
+    @Override
+    public void end() throws Exception {
+        isStart = false;
+    }
+
+    @Override
+    public boolean isStart() {
+        return isStart;
     }
 }
