@@ -3,7 +3,9 @@ package com.misaka.network.dominion.web.data;
 import com.misaka.network.dominion.core.Game;
 import com.misaka.network.dominion.core.type.CardEnum;
 import com.misaka.network.dominion.web.core.GameServer;
+import org.springframework.web.socket.TextMessage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +50,19 @@ public class Room implements GameServer {
 
     public List<Long> getPlayerList() {
         return playerList;
+    }
+
+    public boolean broadcast(String msg) {
+        boolean result = true;
+        for (Long userId : getPlayerList()) {
+            try {
+                ServerStorage.instance().getSessionMap().get(userId).sendMessage(new TextMessage(msg));
+            } catch (Exception e) {
+                result = false;
+                System.out.println("send message fail: " + userId + " " + e.toString());
+            }
+        }
+        return result;
     }
 
     @Override

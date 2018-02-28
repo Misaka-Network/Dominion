@@ -5,6 +5,7 @@ import java.util.Map;
 /**
  * Created by Luhaijie on 2018/2/12.
  */
+@Deprecated
 public interface BuildWebSocketListener {
     void beforeHandshake(Map<String, String> params);
     void afterHandshake();

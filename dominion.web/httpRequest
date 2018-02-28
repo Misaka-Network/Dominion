@@ -11,4 +11,9 @@ exit room
 webSocket.send('{"userId":1,"roomId":0,"action":"exitRoom"}');
 
 start game
-webSocket.send('{"roomId":1,"action":"startGame"}');
+webSocket.send('{"roomId":0,"action":"startGame"}');
+
+debug
+webSocket.onmessage = function(evt) {
+    console.log(evt.data);
+};
