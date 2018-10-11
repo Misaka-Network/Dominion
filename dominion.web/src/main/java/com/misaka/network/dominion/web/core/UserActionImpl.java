@@ -11,6 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -44,7 +45,10 @@ public class UserActionImpl extends TextWebSocketHandler implements UserAction {
                     session.sendMessage(new TextMessage("start game " + userMessage.getRoomId() + " succeed!"));
                     break;
                 case WebDefine.USER_ACTION.GAME_OPERATE:
-                    GameEngine operate = JSON.parseObject(userMessage.getGameOperate(), GameEngine.class);
+                    GameEngine engine = ServerStorage.instance().getRoom(userMessage.getRoomId()).getGameEngine();
+                    Method method = engine.getClass().getMethod(userMessage.getGameOperate().getName(), userMessage.getGameOperate().getParameterTypes());
+                    method.invoke(engine, userMessage.getGameOperate().getParams());
+//                    GameEngine operate = JSON.parseObject(userMessage.getGameOperate(), GameEngine.class);
                 default:
             }
         } catch (Exception e) {

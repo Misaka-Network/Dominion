@@ -2,10 +2,10 @@ package com.misaka.network.dominion.web.data;
 
 import com.misaka.network.dominion.core.Game;
 import com.misaka.network.dominion.core.type.CardEnum;
+import com.misaka.network.dominion.service.api.GameEngine;
 import com.misaka.network.dominion.web.core.GameServer;
 import org.springframework.web.socket.TextMessage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +18,16 @@ public class Room implements GameServer {
     private long roomId;
     private boolean isStart = false;
     private Game game;
+    private GameEngine gameEngine;
     private List<Long> playerList = new ArrayList<Long>();
     private List<CardEnum> cardEnumList = new ArrayList<CardEnum>();
 
-    public Room(Game game) {
+    public Room(Game game, GameEngine gameEngine) {
         synchronized (roomCounter) {
             this.roomId = roomCounter++;
         }
         this.game = game;
+        this.gameEngine = gameEngine;
     }
 
     public synchronized void addPlayer(long playerId) {
@@ -42,6 +44,10 @@ public class Room implements GameServer {
 
     public Game getGame() {
         return game;
+    }
+
+    public GameEngine getGameEngine() {
+        return gameEngine;
     }
 
     public static Long getRoomCounter() {

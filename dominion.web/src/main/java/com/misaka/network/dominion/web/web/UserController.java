@@ -1,5 +1,6 @@
 package com.misaka.network.dominion.web.web;
 
+import com.misaka.network.dominion.service.GameEngineDemo;
 import com.misaka.network.dominion.service.GameImpl;
 import com.misaka.network.dominion.web.data.Room;
 import com.misaka.network.dominion.web.data.ServerStorage;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @RequestMapping(value = "/newRoom", method = RequestMethod.GET)
     public long newRoom() {
-        Room room = new Room(new GameImpl());
+        Room room = new Room(new GameImpl(), new GameEngineDemo());
         long roomId = ServerStorage.instance().addRoom(room);
         return roomId;
     }

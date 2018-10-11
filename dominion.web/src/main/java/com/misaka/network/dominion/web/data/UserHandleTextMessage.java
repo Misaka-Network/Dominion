@@ -8,7 +8,7 @@ public class UserHandleTextMessage {
     private long roomId;
     private String action;
 
-    private String gameOperate;
+    private GameOperate gameOperate;
 
     public long getUserId() {
         return userId;
@@ -30,15 +30,37 @@ public class UserHandleTextMessage {
         return roomId;
     }
 
+    public GameOperate getGameOperate() {
+        return gameOperate;
+    }
+
+    public void setGameOperate(GameOperate gameOperate) {
+        this.gameOperate = gameOperate;
+    }
+
     public void setRoomId(long roomId) {
         this.roomId = roomId;
     }
 
-    public String getGameOperate() {
-        return gameOperate;
+    public class GameOperate {
+        private String name;
+        private Object[] params;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Object[] getParams() {
+            return params;
+        }
+
+        public void setParams(Object[] params) {
+            this.params = params;
+        }
     }
 
-    public void setGameOperate(String gameOperate) {
-        this.gameOperate = gameOperate;
-    }
 }

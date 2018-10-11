@@ -11,6 +11,7 @@ import java.util.Map;
 /**
  * Created by Luhaijie on 2018/2/11.
  */
+@Deprecated
 public class UserInterceptor extends HttpSessionHandshakeInterceptor {
     private BuildWebSocketListener userActionListener;
 
